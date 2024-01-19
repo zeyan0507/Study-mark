@@ -1,3 +1,4 @@
 # 测试
 111
-![Alt text](image.png)
+
+<img src="./image.png" height="240px" width="160px" />
