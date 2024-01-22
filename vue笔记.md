@@ -130,4 +130,97 @@
 效果演示：![](./imgs/mk-2024-01-21-03-00-57.png)
 
 
-#
+### v-show与v-if
+v-show（或v-if）=" 表达式 "，表达式值 **true**显示， **false**隐藏
+但是二者的原理不同：
+1. **v-show**：通过切换CSS的 *display：none* 控制显示隐藏
+对应的使用场景：频繁切换显示隐藏的场景
+2. **v-if**： 基于 **条件判断**，是否 **创建**或 **移除**元素节点
+场景：要么显示，要么隐藏，不会频繁的切换
+3. **V-else 和 v-else-if**
+作用：辅助v-if
+注意：需要紧挨着v-if使用
+代码演示：```HTML 
+<div id="app">
+        <p v-if="gender == 1">男</p>
+        <p v-else>女</p>
+        <hr>
+        <p v-if=" score >= 90">A</p>
+        <p v-else-i=" score >=70 ">B</p>
+        <p v-else-if=" score >=60 ">C</p>
+        <p v-else>D</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+               gender: 2,
+               score: 75
+            }
+        })
+    </script>
+```
+
+演示：
+![mk-2024-01-22-17-48-08.png](./imgs/mk-2024-01-22-17-48-08.png)
+
+4. **v-on**
+作用：注册事件 = 添加监听 + 提供处理逻辑
+### 语法1：v-on：事件名 = "内联系语句"
+代码演示：
+
+    ```html
+    <div id="happy">
+        <button @click = "msg--">-</button>
+        <span>{{ msg }}</span>
+        <button @click = "msg++">+</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+
+    <script>
+        const happy = new Vue({
+            el:"#happy",
+            data:{
+                msg: 100
+            }
+        })
+    </script>
+        ```
+
+### 语法2：v-on：事件名 = "methods中的函数名"
+用处就是自己可以定义个函数，可以进行更复杂的函数操作
+代码片段：
+
+    ```html
+    <div id="happy">
+    <button @click = "msg--">-</button>
+    <span>{{ msg }}</span>
+    <button @click = "fn">+</button>
+   </div>
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+
+    <script>
+    const happy = new Vue({
+    el:"#happy",
+    data:{
+        msg: 100
+    },
+    // 提供处理逻辑函数
+    methods: {
+        fn(){
+    // 这里不可用直接用msg，因为它是happy里面，fn外面的变量
+    // 注意所有 methods 中的函数，this 都指向当前实例（也就是happy）    
+            happy.msg += 2
+        // 写成 this.msg += 2 更好
+        }
+    }
+     })
+    </script>
+    ```
+
+**可以简写为：@事件名 = " ... "**
+
+### v-on 调用传参
+![mk-2024-01-22-18-13-15.png](./imgs/mk-2024-01-22-18-13-15.png)
+
